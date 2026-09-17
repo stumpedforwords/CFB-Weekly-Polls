@@ -1,0 +1,1221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!doctype html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="utf-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</p>
+<p class="p1">&lt;meta name="theme-color" content="#0b0d10"&gt;</p>
+<p class="p1">&lt;title&gt;Mehtaverse CFB Poll&lt;/title&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">:root {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--bg:#07090c; --panel:#0f1217; --panel2:#141820; --text:#f4f7fb; --muted:#9ba5b3;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--line:#262c36; --accent:#d7ff38; --up:#8bea91; --down:#ff8b8b; --new:#b8c7ff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--shadow:0 20px 50px rgba(0,0,0,.28);</p>
+<p class="p1">}</p>
+<p class="p1">* { box-sizing:border-box; }</p>
+<p class="p1">html { scroll-behavior:smooth; }</p>
+<p class="p1">body { margin:0; background:var(--bg); color:var(--text); font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }</p>
+<p class="p1">a { color:inherit; }</p>
+<p class="p1">.site { min-height:100vh; }</p>
+<p class="p1">.topbar {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>position:sticky; top:0; z-index:50; backdrop-filter:blur(16px);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background:rgba(7,9,12,.86); border-bottom:1px solid var(--line);</p>
+<p class="p1">}</p>
+<p class="p1">.topbar-inner { max-width:1500px; margin:auto; padding:14px 22px; display:flex; gap:22px; align-items:center; }</p>
+<p class="p1">.brand { font-weight:850; letter-spacing:-.03em; font-size:18px; white-space:nowrap; }</p>
+<p class="p1">.brand span { color:var(--accent); }</p>
+<p class="p1">.tabs { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; }</p>
+<p class="p1">.tabs::-webkit-scrollbar { display:none; }</p>
+<p class="p1">.tab {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border:1px solid var(--line); background:var(--panel); color:var(--muted);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-radius:999px; padding:9px 14px; cursor:pointer; font-weight:750; white-space:nowrap;</p>
+<p class="p1">}</p>
+<p class="p1">.tab.active { background:var(--text); color:#0a0c10; border-color:var(--text); }</p>
+<p class="p1">main { max-width:1500px; margin:auto; padding:32px 22px 80px; }</p>
+<p class="p1">.hero { display:flex; justify-content:space-between; gap:24px; align-items:flex-end; margin-bottom:28px; }</p>
+<p class="p1">h1 { font-size:clamp(34px,5vw,64px); line-height:.92; letter-spacing:-.055em; margin:0 0 12px; max-width:850px; }</p>
+<p class="p1">.kicker { color:var(--accent); text-transform:uppercase; font-size:12px; letter-spacing:.18em; font-weight:850; }</p>
+<p class="p1">.sub { color:var(--muted); max-width:720px; line-height:1.55; }</p>
+<p class="p1">.hero-note { min-width:230px; padding:15px 16px; border:1px solid var(--line); background:var(--panel); border-radius:16px; }</p>
+<p class="p1">.hero-note b { display:block; font-size:22px; margin-top:4px; }</p>
+<p class="p1">.section { margin-top:34px; }</p>
+<p class="p1">.section-head { display:flex; justify-content:space-between; gap:15px; align-items:end; margin-bottom:12px; }</p>
+<p class="p1">.section-head h2 { margin:0; font-size:22px; letter-spacing:-.03em; }</p>
+<p class="p1">.section-head p { margin:0; color:var(--muted); font-size:13px; }</p>
+<p class="p1">.poll-shell { border:1px solid var(--line); border-radius:18px; overflow:hidden; background:var(--panel); box-shadow:var(--shadow); }</p>
+<p class="p1">.poll-scroll { overflow-x:auto; overflow-y:hidden; overscroll-behavior-x:contain; scroll-snap-type:x proximity; }</p>
+<p class="p1">.poll-grid { display:grid; grid-auto-flow:column; grid-template-rows:72px repeat(25,54px); grid-auto-columns:minmax(182px, 1fr); min-width:max-content; }</p>
+<p class="p1">.rank-col {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>width:82px; min-width:82px; position:sticky; left:0; z-index:10;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>background:linear-gradient(90deg,var(--panel) 0%,var(--panel) 82%,rgba(15,18,23,.96) 100%);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>border-right:1px solid var(--line);</p>
+<p class="p1">}</p>
+<p class="p1">.grid-cell { min-width:182px; border-right:1px solid var(--line); }</p>
+<p class="p1">.header-row { position:sticky; top:0; z-index:8; }</p>
+<p class="p1">.rank-head { height:72px; display:flex; align-items:end; padding:0 12px 13px; font-size:11px; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:.1em; }</p>
+<p class="p1">.week-head { height:72px; padding:11px 12px 10px; display:flex; flex-direction:column; justify-content:flex-end; background:var(--panel2); border-bottom:1px solid var(--line); scroll-snap-align:start; }</p>
+<p class="p1">.week-head .date { font-size:16px; font-weight:850; letter-spacing:-.02em; }</p>
+<p class="p1">.week-head .label { color:var(--muted); font-size:11px; margin-top:2px; }</p>
+<p class="p1">.rank-row { height:54px; display:flex; align-items:center; padding:0 12px; border-bottom:1px solid rgba(255,255,255,.055); font-weight:800; font-variant-numeric:tabular-nums; }</p>
+<p class="p1">.rank-num { color:#737d8d; font-size:13px; }</p>
+<p class="p1">.team-cell { height:54px; display:flex; align-items:center; gap:8px; padding:0 12px; border-bottom:1px solid rgba(255,255,255,.055); white-space:nowrap; }</p>
+<p class="p1">.team-name { font-size:14px; font-weight:760; overflow:hidden; text-overflow:ellipsis; }</p>
+<p class="p1">.move { font-size:11px; font-weight:900; letter-spacing:.01em; }</p>
+<p class="p1">.move.up { color:var(--up); } .move.down { color:var(--down); } .move.new { color:var(--new); } .move.unchanged { color:#697484; }</p>
+<p class="p1">.latest { outline:2px solid var(--accent); outline-offset:-2px; }</p>
+<p class="p1">.cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }</p>
+<p class="p1">.card { border:1px solid var(--line); background:var(--panel); border-radius:18px; padding:18px; }</p>
+<p class="p1">.card h3 { margin:0 0 10px; font-size:15px; }</p>
+<p class="p1">.card ol { margin:0; padding-left:23px; color:#dbe1e9; }</p>
+<p class="p1">.card li { padding:5px 0; line-height:1.3; }</p>
+<p class="p1">.mini-muted { color:var(--muted); font-size:12px; line-height:1.5; }</p>
+<p class="p1">.footer { margin-top:34px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); padding-top:18px; }</p>
+<p class="p1">.badge { display:inline-flex; padding:4px 7px; border:1px solid var(--line); border-radius:999px; color:var(--muted); font-size:10px; font-weight:850; text-transform:uppercase; letter-spacing:.08em; }</p>
+<p class="p1">@media (max-width: 840px) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topbar-inner { padding:12px 14px; align-items:flex-start; flex-direction:column; gap:10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>main { padding:24px 14px 60px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hero { flex-direction:column; align-items:flex-start; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hero-note { width:100%; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cards { grid-template-columns:1fr; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.grid-cell { min-width:174px; } .poll-grid { grid-auto-columns:174px; } .rank-col { width:70px; min-width:70px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.team-cell { padding-left:10px; padding-right:10px; } .rank-row { padding-left:10px; padding-right:10px; }</p>
+<p class="p1">}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1">&lt;div class="site"&gt;</p>
+<p class="p1">&lt;header class="topbar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="topbar-inner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="brand"&gt;MEHTAVERSE &lt;span&gt;CFB&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;nav id="tabs" class="tabs" aria-label="Seasons"&gt;&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/header&gt;</p>
+<p class="p1">&lt;main&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;section class="hero"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="kicker"&gt;Personal college football rankings&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;Every week. Side by side.&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="sub"&gt;A personal-poll archive modeled around the AP-poll experience: the rank order stays fixed while each weekly column lets you see exactly how the field moved.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="hero-note"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="badge"&gt;Current homepage&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;b id="currentSeason"&gt;&lt;/b&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="mini-muted"&gt;Swipe or scroll horizontally through the weeks.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;section class="section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="section-head"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2 id="pollTitle"&gt;&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p id="pollHint"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="poll-shell"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="poll-scroll" id="pollScroll"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;section id="supplemental" class="section"&gt;&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Movement is shown exactly where supplied: (+) rises, (-) falls, NEW marks a team entering the Top 25, and × is preserved as an explicit unchanged marker where provided.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/main&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">const DATA = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"title": "Mehtaverse CFB Poll",</p>
+<p class="p1"><span class="Apple-converted-space">  </span>"seasons": {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"2026-27": {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"subtitle": "Mehtaverse College Football Poll",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"predictions": [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Leavitt will not be a top 5 SEC QB",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"The best team in the SEC will have at least 2 losses",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Ole Miss will be a playoff team"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"cfp": [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Ohio State", "Georgia", "Texas Tech", "Miami", "Texas", "Oregon",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Ole Miss", "Indiana", "Alabama", "Missouri", "Notre Dame", "UNLV"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"sec_qb": [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Chambliss", "Manning", "Stockton", "Brown", "Simmons", "Taylor",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Leavitt", "Sellers", "Mateer", "Reed", "Russell", "Minchey",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Jackson", "McIntyre", "Curtis", "Philo"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"weeks": [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "8/12",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Preseason",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Auburn", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/7",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 1",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Auburn", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Louisville", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/16",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 2",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Auburn", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Louisville", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "SMU", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Houston", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "-5" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>]</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"2025-26": {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"subtitle": "Mehtaverse College Football Poll",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"predictions": [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Nussemier will not be a top 4 Heisman contender",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Carson Beck will be better than 24-25 Cam Ward",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Both Lagaway and Sellers will finish in the top 5 for the Heisman, or one of the two will finish top 3",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"Texas vs Florida will be a closer game than Texas vs Ohio State"</p>
+<p class="p1"><span class="Apple-converted-space">      </span>],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"weeks": [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "8/3",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Preseason",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "SMU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/2",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 1",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "-6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona State", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "x" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida St", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "-17" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "SMU", "move": "-2" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/7",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 2",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida St", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USF", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Mississippi St", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Auburn", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/13",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 3",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida St", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "-6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Mississippi St", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Auburn", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia Tech", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "-19" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/21",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 4",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida St", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Mississippi St", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia Tech", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Auburn", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USF", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "-12" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/27",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 5",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "-7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida St", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "-12" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "-9" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Mississippi St", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Auburn", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USF", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "10/4",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 6",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Okla", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida St", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USF", "move": "+6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Auburn", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Nebraska", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Mississippi State", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Florida", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "-23" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "10/11",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 7",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "-10" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USF", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "+9" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Nebraska", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia Tech", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Okla", "move": "-18" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Mississippi State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Auburn", "move": "-6" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "10/18",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 8",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+14" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "-10" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "-10" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USF", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia Tech", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Louisville", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "-7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "-11" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona State", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Cincinnati", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Okla", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "-9" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "-6" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "10/26",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 9",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia Tech", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Louisville", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Cincinnati", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USF", "move": "-7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Memphis", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Houston", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Navy", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/1",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 10",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "+8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Louisville", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USF", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia Tech", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Memphis", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNT", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Washington", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/8",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 11",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USF", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia Tech", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNT", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "JMU", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "-10" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Louisville", "move": "-10" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/16",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 12",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia Tech", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNT", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "JMU", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Navy", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Houston", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/22",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 13",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNT", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Michigan", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "JMU", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tulane", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "-9" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "-3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona State", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "SMU", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/30",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 14",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas Tech", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNT", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "JMU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Virginia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tulane", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNLV", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>]</p>
+<p class="p1"><span class="Apple-converted-space">    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>"2024-25": {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"subtitle": "Mehtaverse College Football Poll",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"weeks": [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/15",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 3",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn state", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas state", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Louisville", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Mich", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa state", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Nebraska", "move": "" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/22",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 4",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole miss", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Utah", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Okla st", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Mich", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Louisville", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas State", "move": "-12" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "-1" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "9/29",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 5",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "-6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Louisville", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kentucky", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Mich", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "USC", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas St", "move": "+6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "10/5",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Post Week 6",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "-3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kentucky", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "-13" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arkansas", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Nebraska", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "10/12",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 7",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma State", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+11" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma", "move": "-10" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arkansas", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Nebraska", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Pitt", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "10/19",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 8",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oklahoma State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "-3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "-3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "-3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole miss", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas State", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "-3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Pitt", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "SMU", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Army", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Navy", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "10/26",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 9",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas State", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Pitt", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "SMU", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Army", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Washington State", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Colorado", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/2",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 10",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "-3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "SMU", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Army", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Washington State", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Colorado", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas State", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/9",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 11",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole miss", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "-7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "SMU", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Army", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Washington State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Colorado", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "LSU", "move": "-7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Kansas State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/17",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 12",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole miss", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "SMU", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Colorado", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Army", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Vanderbilt", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tulane", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona State", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNLV", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/23",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 13",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Smu", "move": "+3" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "+6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "-11" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "-7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona State", "move": "+6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tulane", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas A&amp;M", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "-7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Colorado", "move": "-5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNLV", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Army", "move": "-6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Memphis", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "11/30",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 14",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Smu", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona State", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Colorado", "move": "+4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "-8" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "-6" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Memphis", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNLV", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Army", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "new" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Syracuse", "move": "new" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"date": "12/7",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"label": "Week 15",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>"entries": [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Oregon", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Notre Dame", "move": "+1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Georgia", "move": "+2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Texas", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Penn State", "move": "-1" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Tennessee", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Boise State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Indiana", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ohio State", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Arizona State", "move": "+5" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "South Carolina", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Clemson", "move": "+7" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Smu", "move": "-4" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Alabama", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Ole Miss", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Iowa State", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "BYU", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Colorado", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Miami", "move": "-2" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Memphis", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Illinois", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "UNLV", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Army", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Missouri", "move": "" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ "team": "Syracuse", "move": "" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>]</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">let activeSeason = "2026-27";</p>
+<p class="p2"><br></p>
+<p class="p1">function esc(s) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return String(s).replace(/[&amp;&lt;&gt;"']/g, m =&gt; ({"&amp;":"&amp;amp;","&lt;":"&amp;lt;","&gt;":"&amp;gt;",'"':"&amp;quot;","'":"&amp;#39;"}[m]));</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function movementHtml(move) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!move) return "";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (move === "new") return '&lt;span class="move new"&gt;NEW&lt;/span&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (move === "x") return '&lt;span class="move unchanged"&gt;×&lt;/span&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const n = parseInt(move,10);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (Number.isNaN(n)) return '&lt;span class="move unchanged"&gt;' + esc(move) + '&lt;/span&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return '&lt;span class="move ' + (n &gt; 0 ? 'up' : 'down') + '"&gt;(' + (n &gt; 0 ? '+' : '') + n + ')&lt;/span&gt;';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderTabs() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tabs = document.getElementById("tabs");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tabs.innerHTML = Object.keys(DATA.seasons).map(year =&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;button class="tab ' + (year === activeSeason ? 'active' : '') + '" data-year="' + year + '"&gt;' + year + '&lt;/button&gt;'</p>
+<p class="p1"><span class="Apple-converted-space">  </span>).join("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tabs.querySelectorAll(".tab").forEach(btn =&gt; btn.addEventListener("click", () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>activeSeason = btn.dataset.year;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}));</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderPoll(season) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const weeks = season.weeks;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const latestIdx = weeks.length - 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html = '&lt;div class="poll-grid"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += '&lt;div class="rank-col header-row rank-head"&gt;Rank&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (let r = 0; r &lt; 25; r++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += '&lt;div class="rank-col rank-row"&gt;&lt;span class="rank-num"&gt;' + (r+1) + '&lt;/span&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>weeks.forEach((w, i) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += '&lt;div class="grid-cell header-row week-head ' + (i === latestIdx ? 'latest' : '') + '"&gt;&lt;div class="date"&gt;' + esc(w.date) + '&lt;/div&gt;&lt;div class="label"&gt;' + esc(w.label) + '&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>for (let r = 0; r &lt; 25; r++) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const item = w.entries[r];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>html += '&lt;div class="grid-cell team-cell ' + (i === latestIdx ? 'latest' : '') + '"&gt;&lt;span class="team-name"&gt;' + esc(item.team) + '&lt;/span&gt;' + movementHtml(item.move) + '&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>html += '&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("pollScroll").innerHTML = html;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const scroller = document.getElementById("pollScroll");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>requestAnimationFrame(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>scroller.scrollLeft = scroller.scrollWidth;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function numbered(items) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!items || !items.length) return "";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return '&lt;ol&gt;' + items.map(x =&gt; '&lt;li&gt;' + esc(x) + '&lt;/li&gt;').join("") + '&lt;/ol&gt;';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderSupplemental(season) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const mount = document.getElementById("supplemental");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cards = [];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (season.sec_qb) cards.push('&lt;article class="card"&gt;&lt;h3&gt;26-27 SEC QB Rankings&lt;/h3&gt;' + numbered(season.sec_qb) + '&lt;/article&gt;');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (season.predictions) cards.push('&lt;article class="card"&gt;&lt;h3&gt;Pre-Season Predictions&lt;/h3&gt;' + numbered(season.predictions) + '&lt;/article&gt;');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (season.cfp) cards.push('&lt;article class="card"&gt;&lt;h3&gt;CFP 27 Prediction&lt;/h3&gt;' + numbered(season.cfp) + '&lt;/article&gt;');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>mount.innerHTML = cards.length ? '&lt;div class="cards"&gt;' + cards.join("") + '&lt;/div&gt;' : "";</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function render() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const season = DATA.seasons[activeSeason];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderTabs();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("currentSeason").textContent = activeSeason;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("pollTitle").textContent = activeSeason + " — " + season.subtitle;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("pollHint").textContent = season.weeks.length + " weekly columns • fixed 1–25 ranking rows";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderPoll(season);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderSupplemental(season);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.title = "Mehtaverse CFB Poll — " + activeSeason;</p>
+<p class="p1">}</p>
+<p class="p1">render();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
