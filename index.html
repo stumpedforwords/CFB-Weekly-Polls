@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b0d10">
-<title>Mehtaverse CFB Poll</title>
+<title>CFB Poll</title>
 <style>
 :root {
   --bg:#07090c; --panel:#0f1217; --panel2:#141820; --text:#f4f7fb; --muted:#9ba5b3;
@@ -85,7 +85,7 @@ h1 { font-size:clamp(34px,5vw,64px); line-height:.92; letter-spacing:-.055em; ma
 <div class="site">
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand">MEHTAVERSE <span>CFB</span></div>
+    <div class="brand">By: Rushil M <span>CFB</span></div>
     <nav id="tabs" class="tabs" aria-label="Seasons"></nav>
   </div>
 </header>
@@ -125,10 +125,10 @@ h1 { font-size:clamp(34px,5vw,64px); line-height:.92; letter-spacing:-.055em; ma
 
 <script>
 const DATA = {
-  "title": "Mehtaverse CFB Poll",
+  "title": "CFB Poll",
   "seasons": {
     "2026-27": {
-      "subtitle": "Mehtaverse College Football Poll",
+      "subtitle": "College Football Poll",
       "predictions": [
         "Leavitt will not be a top 5 SEC QB",
         "The best team in the SEC will have at least 2 losses",
@@ -240,7 +240,7 @@ const DATA = {
       ]
     },
     "2025-26": {
-      "subtitle": "Mehtaverse College Football Poll",
+      "subtitle": "College Football Poll",
       "predictions": [
         "Nussemier will not be a top 4 Heisman contender",
         "Carson Beck will be better than 24-25 Cam Ward",
@@ -1183,7 +1183,7 @@ function numbered(items) {
 function renderSupplemental(season) {
   const mount = document.getElementById("supplemental");
   const cards = [];
-  if (season.sec_qb) cards.push('<article class="card"><h3>26-27 SEC QB Rankings</h3>' + numbered(season.sec_qb) + '</article>');
+  if (season.sec_qb) cards.push('<article class="card"><h3>26-27 Pre-Season SEC QB Rankings</h3>' + numbered(season.sec_qb) + '</article>');
   if (season.predictions) cards.push('<article class="card"><h3>Pre-Season Predictions</h3>' + numbered(season.predictions) + '</article>');
   if (season.cfp) cards.push('<article class="card"><h3>CFP 27 Prediction</h3>' + numbered(season.cfp) + '</article>');
   mount.innerHTML = cards.length ? '<div class="cards">' + cards.join("") + '</div>' : "";
